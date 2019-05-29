@@ -44,7 +44,10 @@ RUN set -eux \
 		$PHPIZE_DEPS \
 		icu-dev \
 		zlib-dev \
+		postgresql-dev \
 	&& docker-php-ext-install -j$(nproc) \
+        pdo_pgsql \
+        pdo \
 		intl \
 		zip \
 	&& pecl install \
