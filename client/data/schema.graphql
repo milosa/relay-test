@@ -1,0 +1,206 @@
+# source: http://localhost/api/graphql
+# timestamp: Wed May 29 2019 22:37:22 GMT+0200 (Central European Summer Time)
+
+input createProductBrandInput {
+  name: String!
+  products: [String]
+  clientMutationId: String
+}
+
+type createProductBrandPayload {
+  productBrand: ProductBrand
+  clientMutationId: String
+}
+
+input createProductInput {
+  name: String!
+  productBrand: String!
+  clientMutationId: String
+}
+
+type createProductPayload {
+  product: Product
+  clientMutationId: String
+}
+
+input deleteProductBrandInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type deleteProductBrandPayload {
+  productBrand: ProductBrand
+  clientMutationId: String
+}
+
+input deleteProductInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type deleteProductPayload {
+  product: Product
+  clientMutationId: String
+}
+
+type Mutation {
+  """Deletes a Product."""
+  deleteProduct(input: deleteProductInput!): deleteProductPayload
+
+  """Updates a Product."""
+  updateProduct(input: updateProductInput!): updateProductPayload
+
+  """Creates a Product."""
+  createProduct(input: createProductInput!): createProductPayload
+
+  """Deletes a ProductBrand."""
+  deleteProductBrand(input: deleteProductBrandInput!): deleteProductBrandPayload
+
+  """Updates a ProductBrand."""
+  updateProductBrand(input: updateProductBrandInput!): updateProductBrandPayload
+
+  """Creates a ProductBrand."""
+  createProductBrand(input: createProductBrandInput!): createProductBrandPayload
+}
+
+"""A node, according to the Relay specification."""
+interface Node {
+  """The id of this node."""
+  id: ID!
+}
+
+type Product implements Node {
+  id: ID!
+  _id: Int!
+  name: String!
+  productBrand: ProductBrand!
+}
+
+type ProductBrand implements Node {
+  id: ID!
+  _id: Int!
+  name: String!
+  products(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ProductConnection
+}
+
+"""Connection for ProductBrand."""
+type ProductBrandConnection {
+  edges: [ProductBrandEdge]
+  pageInfo: ProductBrandPageInfo!
+  totalCount: Int!
+}
+
+"""Edge of ProductBrand."""
+type ProductBrandEdge {
+  node: ProductBrand
+  cursor: String!
+}
+
+"""Information about the current page."""
+type ProductBrandPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+"""Connection for Product."""
+type ProductConnection {
+  edges: [ProductEdge]
+  pageInfo: ProductPageInfo!
+  totalCount: Int!
+}
+
+"""Edge of Product."""
+type ProductEdge {
+  node: Product
+  cursor: String!
+}
+
+"""Information about the current page."""
+type ProductPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type Query {
+  node(id: ID!): Node
+  product(id: ID!): Product
+  products(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ProductConnection
+  productBrand(id: ID!): ProductBrand
+  productBrands(
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+  ): ProductBrandConnection
+}
+
+input updateProductBrandInput {
+  id: ID!
+  name: String
+  products: [String]
+  clientMutationId: String
+}
+
+type updateProductBrandPayload {
+  productBrand: ProductBrand
+  clientMutationId: String
+}
+
+input updateProductInput {
+  id: ID!
+  name: String
+  productBrand: String
+  clientMutationId: String
+}
+
+type updateProductPayload {
+  product: Product
+  clientMutationId: String
+}
